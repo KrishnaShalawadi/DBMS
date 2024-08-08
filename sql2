@@ -1,0 +1,38 @@
+CREATE TABLE BOAT (BID integer PRIMARY KEY,BName VARCHAR(50),BColor VARCHAR(20));
+
+CREATE TABLE SAILOR (
+    SID integer PRIMARY KEY,
+    SName VARCHAR(50),
+    Age integer
+);
+
+CREATE TABLE RESERVES (
+    ReservationID integer PRIMARY KEY,
+    SID integer,
+    BID integer,
+    FOREIGN KEY (SID) REFERENCES SAILOR(SID) ON DELETE CASCADE,
+    FOREIGN KEY (BID) REFERENCES BOAT(BID) ON DELETE CASCADE
+);
+
+INSERT INTO BOAT VALUES (1, 'Boat A', 'Red');
+INSERT INTO BOAT VALUES (2, 'Boat B', 'Blue');
+select * from BOAT;
+
+INSERT INTO SAILOR VALUES (101, 'Sailor A', 25);
+INSERT INTO SAILOR VALUES (102, 'Sailor B', 30);
+select * from SAILOR;
+
+INSERT INTO RESERVES VALUES (1001, 101, 1);
+INSERT INTO RESERVES VALUES (1002, 102, 2);
+INSERT INTO RESERVES VALUES (1003, 101, 2);
+INSERT INTO RESERVES VALUES (1004, 102, 1);
+select * from RESERVES;
+
+1.Obtain the details of the boats reserved by #Sailor_Name.
+SELECT b.* FROM BOAT b JOIN RESERVES r ON b.BID = r.BID JOIN SAILOR s ON r.SID = s.SID WHERE s.SName = 'Sailor A';
+
+2.Retrieve the BID of the boats reserved necessarily by all the sailors
+SELECT BID FROM RESERVES GROUP BY BID HAVING COUNT(DISTINCT SID) = (SELECT COUNT(*) FROM SAILOR);
+
+3.Find the number of boats reserved by each sailor. Display the Sailor_Name along with the number of boats reserved
+SELECT s.SName, COUNT(r.BID) AS NumberOfBoatsReserved FROM SAILOR s LEFT JOIN RESERVES r ON s.SID = r.SID GROUP BY s.SID, s.SName;
