@@ -1,0 +1,54 @@
+create table employee(ssn integer(5) primary key not null,ename varchar(15),deptno integer(5));
+create table project(projno integer(5) primary key not null,parea varchar(15));
+create table workson(ssn integer(5),projno integer(5),primary key(ssn,projno),foreign key(ssn) references employee(ssn),foreign key(projno) references project(projno));
+
+insert into employee values(101,'krishna',10);
+insert into employee values(102,'akash',11);
+insert into employee values(103,'vishnu',12);
+insert into employee values(104,'abhi',13);
+
+select * from employee;
+
+insert into project values(21,'networking');
+insert into project values(22,'tasty tech');
+insert into project values(23,'ecopower');
+insert into project values(24,'renewenergy');
+
+select * from project;
+
+insert into workson values(101,24);
+insert into workson values(102,21);
+insert into workson values(103,22);
+insert into workson values(104,23);
+
+select * from workson;
+
+1) 
+select * from employee where ssn = (select ssn from workson where projno = (select projno from project where parea = 'ecopower'));
+2)
+select deptno,count(*) as num from employee group by deptno;
+3)
+update workson set projno = 24  where ssn =101;
+
+select * from workson where ssn = 101;
+
+# mongodb
+
+
+Create the collection:
+db.createCollection("EMPLOYEE")
+
+Inserting the values:
+
+>db.EMPLOYEE.insert({"SSN":4567,"Name":'James',"DeptNo":'XYZ',"ProjectNo":101})
+>db.EMPLOYEE.insert({"SSN":3256,"Name":'Jack',"DeptNo":'XYZ',"ProjectNo":102})
+
+
+>db.EMPLOYEE.find().pretty()
+1. List all the employees of Department named #Dept_name.
+> db.EMPLOYEE.find({"DeptNo":'XYZ'}).pretty()
+
+2. Name the employees working on Project Number :#Project_No
+> db.EMPLOYEE.find({"ProjectNo":104}).pretty()
+
+#plsql
