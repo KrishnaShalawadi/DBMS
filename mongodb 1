@@ -1,0 +1,11 @@
+
+db.employees.insertMany([
+  {ssn: 101, name: 'mukesh', dept: 'deptA',project:{pno:21 ,parea:'database'}},
+  {ssn: 102, name: 'krishna', dept: 'deptB',project:{pno:22 ,parea:'cloud'},project:{pno:23,parea:'data analysis'}},
+  {ssn: 103, name: 'naveen', dept: 'deptC',project:{pno:23,parea:'data analysis'}},
+  {ssn: 104, name: 'handi', dept: 'deptC',project:{pno:24,parea:'networking'}},
+]);
+
+db.employees.find({dept: 'deptC'},{_id:0,ssn:1,name:1});
+
+db.employees.find({"project.pno": 23},{_id:0,name:1});
