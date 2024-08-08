@@ -1,0 +1,11 @@
+
+db.parts.insertMany([
+  {pname: 'mirrors', pid:11, pcolour: 'grey',supplier:{sname:'sup1',sid:1}},
+  {pname: 'doors', pid:12, pcolour: 'silver',supplier:[{sname:'sup2',sid:2},{sname:'sup4',sid:4}]},
+  {pname: 'tail lights', pid:13, pcolour: 'red',supplier:{sname:'sup3',sid:3}},
+]);
+
+db.parts.updateOne({ pid: 13 }, { $set: { pname: 'bumper', pcolour: 'black' } });
+db.parts.find({ pid: 13 });
+
+db.parts.find({pid:12},{_id:0,"supplier":1});
